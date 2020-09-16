@@ -17,6 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['prefix'=>'admin', 'middleware'=>['auth'=>'admin'], 'name'=>'admin.'],function(){
+    Route::resource('/', 'AdminController');
+});
+
+Route::post('/courses/enroll/{id}', 'CoursesController@enroll')->name('courses.enroll');
+Route::resource('/courses', 'CoursesController');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
